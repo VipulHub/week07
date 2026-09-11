@@ -120,15 +120,21 @@ jobs:
         working-directory: frontend
         run: npm ci
 
+      - name: Create test environment file
+        working-directory: frontend
+        run: |
+          cat > .env.test << 'ENV'
+          VITE_USER_SERVICE_URL=http://localhost:8001
+          VITE_STUDENT_SERVICE_URL=http://localhost:8002
+          VITE_LECTURER_SERVICE_URL=http://localhost:8003
+          VITE_COURSE_SERVICE_URL=http://localhost:8004
+          VITE_ENROLLMENT_SERVICE_URL=http://localhost:8005
+          ENV
+
       - name: Run frontend tests
         working-directory: frontend
         env:
           CI: true
-          VITE_USER_SERVICE_URL: http://localhost:8001
-          VITE_STUDENT_SERVICE_URL: http://localhost:8002
-          VITE_LECTURER_SERVICE_URL: http://localhost:8003
-          VITE_COURSE_SERVICE_URL: http://localhost:8004
-          VITE_ENROLLMENT_SERVICE_URL: http://localhost:8005
         run: npm test
 
 
